@@ -1,0 +1,71 @@
+#include <iostream>
+#include <vector>
+#include <cmath>              // 用于 sinf、sqrtf
+#include <iomanip>           // 用于输出格式
+#include <chrono>            // 用于计时
+#include <cuda_runtime.h>
+#include <device_launch_parameters.h>
+
+// 检查 CUDA 错误的辅助宏
+#define CUDA_CHECK(err) \
+    do { \
+        cudaError_t err_ = (err); \
+        if (err_ != cudaSuccess) { \
+            std::cerr << "CUDA error at " << __FILE__ << ":" << __LINE__; \
+            std::cerr << ": " << cudaGetErrorString(err_) << std::endl; \
+            exit(EXIT_FAILURE); \
+        } \
+    } while (0)
+
+// 核函数：演示标准数学函数
+__global__ void standardMathKernel(float* data, int n) {
+    int idx = blockIdx.x * blockDim.x + threadIdx.x;
+    if (idx < n) {
+        float val = data[idx];
+        data[idx] = sinf(val) + sqrtf(val); // 标准库函数
+    }
+}
+
+int main() {
+    const int N = 1024 * 1024 * 10; // 元素数量
+    const size_t bytes = N * sizeof(float);
+
+    // 初始化主机数据
+    std::vector<float> h_data(N, 0.0f);
+    for (int i = 0; i < N; ++i) {
+        h_data[i] = static_cast<float>(i % 100) + 0.1f;
+    }
+
+    // 分配设备内存并拷贝
+    float *d_data, *d_result;
+    CUDA_CHECK(cudaMalloc(&d_data, bytes));
+    CUDA_CHECK(cudaMalloc(&d_result, bytes));
+    CUDA_CHECK(cudaMemcpy(d_data, h_data.data(), bytes, cudaMemcpyHostToDevice));
+    CUDA_CHECK(cudaMemcpy(d_result, h_data.data(), bytes, cudaMemcpyHostToDevice));
+
+    // 设置执行配置
+    int blockSize = 256;
+    int gridSize = (N + blockSize - 1) / blockSize;
+
+    // 计时
+    cudaEvent_t start, stop;
+    CUDA_CHECK(cudaEventCreate(&start));
+    CUDA_CHECK(cudaEventCreate(&stop));
+    float ms = 0.0f;
+
+    CUDA_CHECK(cudaEventRecord(start));
+    standardMathKernel<<<gridSize, blockSize>>>(d_result, N);
+    CUDA_CHECK(cudaEventRecord(stop));
+    CUDA_CHECK(cudaEventSynchronize(stop));
+    CUDA_CHECK(cudaEventElapsedTime(&ms, start, stop));
+
+    std::cout << "Standard Math (sinf + sqrtf): " << ms << " ms" << std::endl;
+
+    // 清理
+    CUDA_CHECK(cudaFree(d_data));
+    CUDA_CHECK(cudaFree(d_result));
+    CUDA_CHECK(cudaEventDestroy(start));
+    CUDA_CHECK(cudaEventDestroy(stop));
+
+    return 0;
+} 

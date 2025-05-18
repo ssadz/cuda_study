@@ -1,0 +1,25 @@
+{
+  // 这是 Cursor 编辑器用于当前工作区的特定规则文件。
+  // 您可以在这里定义例如代码格式化、静态检查 (linting)、语言标准等设置。
+  // 具体的可用规则和语法会依赖于 Cursor 的功能以及您安装的扩展。
+
+  "cpp": {
+    "standard": "c++14",           // 指定 C++ 标准为 C++14
+    "codeStyle": {
+      "comments": {
+        "language": "zh-CN"        // 注释使用中文
+      },
+      "stringLiterals": {
+        "language": "en-US"        // 字符串字面量(包括std::cout输出)使用英文
+      }
+    },
+    "formatter": "clang-format"    // 使用 clang-format 进行代码格式化
+  },
+  "os": "win32",
+  "buildDirectory": "build"
+
+  // 其他示例 (具体语法可能需要调整以适应您的 Cursor 配置):
+  // "python": {
+  //   "formatter": "black"
+  // }
+} 

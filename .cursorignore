@@ -1,0 +1,68 @@
+# Build artifacts
+[Bb]uild/
+
+# CMake user files
+[Cc][Mm]ake[Ll]ists.txt.user
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+Testing/
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps/
+
+# Visual Studio Code files
+.vscode/
+
+# IDE-specific files (general)
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Rider
+.idea/
+*.sln.iml
+
+# CLion
+.idea/
+cmake-build-*/
+
+# Output files
+*.exe
+*.dll
+*.so
+*.dylib
+*.lib
+*.a
+*.pdb
+*.obj
+*.o
+
+# Windows specific
+[Dd]ebug/
+[Rr]elease/
+[Xx]64/
+[Ww][Ii][Nn]32/
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.sln
+
+# macOS specific
+*.xcodeproj/
+xcuserdata/
+
+# Linux specific
+*.kdev4
+
+# Log files
+*.log
+
+# Temporary files
+*~
+*.swp
+*.swo 
