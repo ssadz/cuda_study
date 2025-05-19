@@ -1,0 +1,20 @@
+# 指定 CMake 的最低版本要求
+cmake_minimum_required(VERSION 3.18)
+
+# 定义项目名称和支持的语言
+project(ControlFlowDivergenceExample LANGUAGES CXX CUDA)
+
+# 添加可执行文件目标
+add_executable(control_flow_divergence control_flow_divergence.cu)
+
+# 为目标设置属性
+set_target_properties(control_flow_divergence PROPERTIES
+    CUDA_STANDARD 14
+    CXX_STANDARD 14
+    CXX_STANDARD_REQUIRED YES
+)
+
+# 可选：如果需要链接特定库，例如数学库 m
+# target_link_libraries(control_flow_divergence PRIVATE m)
+
+message(STATUS "配置 ControlFlowDivergenceExample 项目 (位于 cuda_bp_examples/15_control_flow)")

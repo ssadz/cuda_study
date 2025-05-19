@@ -15,7 +15,7 @@
     },
     "formatter": "clang-format"    // 使用 clang-format 进行代码格式化
   },
-  "os": "linux",
+  "os": "win32",
   "buildDirectory": "build"
 
   // 其他示例 (具体语法可能需要调整以适应您的 Cursor 配置):

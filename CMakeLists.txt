@@ -20,16 +20,15 @@ set(CMAKE_CUDA_ARCHITECTURES "60") # Pascal架构，较为通用
 # 如果特定项目需要RDC，可以在其CMakeLists.txt中单独设置
 # 例如: set_target_properties(target_name PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
 
-# 查找 CUDA 工具包
-find_package(CUDA REQUIRED)
+# 使用现代CMake方式处理CUDA，不再使用已弃用的FindCUDA模块
+# 设置策略避免警告
+cmake_policy(SET CMP0146 NEW)
 
 # 输出一些有用的 CUDA 变量 (可选，用于调试)
-if(CUDA_FOUND)
-    message(STATUS "Found CUDA toolkit: ${CUDA_TOOLKIT_ROOT_DIR}")
-    message(STATUS "CUDA Version: ${CUDA_VERSION_STRING}")
-    message(STATUS "CUDA Compiler: ${CUDA_CUDA_COMPILER}")
-    message(STATUS "CUDA Include Dirs: ${CUDA_INCLUDE_DIRS}")
-    message(STATUS "CUDA Libraries: ${CUDA_LIBRARIES}")
+if(CMAKE_CUDA_COMPILER)
+    message(STATUS "Found CUDA compiler: ${CMAKE_CUDA_COMPILER}")
+    message(STATUS "CUDA Version: ${CMAKE_CUDA_COMPILER_VERSION}")
+    message(STATUS "CUDA Include Dirs: ${CMAKE_CUDA_TOOLKIT_INCLUDE_DIRECTORIES}")
     
     message(STATUS "\n注意：如果编译成功但无法运行CUDA程序，请检查：")
     message(STATUS "1. 是否正确安装了NVIDIA驱动")
@@ -37,7 +36,7 @@ if(CUDA_FOUND)
     message(STATUS "3. 查看'lspci | grep -i nvidia'确认系统检测到NVIDIA设备")
     message(STATUS "4. 尝试'sudo apt update && sudo apt install nvidia-driver-<版本>' 更新驱动\n")
 else()
-    message(FATAL_ERROR "CUDA toolkit not found!")
+    message(FATAL_ERROR "CUDA compiler not found!")
 endif()
 
 # 添加 cuda_bp_examples 目录作为一个子目录
