@@ -1,0 +1,19 @@
+# 指定 CMake 的最低版本要求
+cmake_minimum_required(VERSION 3.18)
+
+# 定义项目名称和支持的语言
+project(NumericalPrecisionExample LANGUAGES CXX CUDA)
+
+# 添加可执行文件目标
+add_executable(fp_associativity_example fp_associativity_example.cu)
+
+# 为目标设置属性
+set_target_properties(fp_associativity_example PROPERTIES
+    CUDA_STANDARD 14
+    CXX_STANDARD 14
+    CXX_STANDARD_REQUIRED YES
+)
+
+# 输出状态消息
+# 字符串字面量保持英文
+message(STATUS "Configuring NumericalPrecisionExample project (located in cuda_bp_examples/9_numerical_precision)")
