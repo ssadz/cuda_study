@@ -24,6 +24,7 @@ add_subdirectory(11_performance_metrics)
 add_subdirectory(12_pinned_memory)
 add_subdirectory(13_execution_configuration)
 add_subdirectory(15_control_flow)
+add_subdirectory(8_texture_memory)
 
 # 输出一条状态消息
 message(STATUS "配置 CUDABestPracticesExamples 根项目 (位于 cuda_bp_examples)")

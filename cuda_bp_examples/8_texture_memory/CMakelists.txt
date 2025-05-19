@@ -1,0 +1,19 @@
+# 指定 CMake 的最低版本要求
+cmake_minimum_required(VERSION 3.18)
+
+# 定义项目名称和支持的语言
+project(TextureMemoryExample LANGUAGES CXX CUDA)
+
+# 添加可执行文件目标
+add_executable(texture_memory_example texture_memory_example.cu)
+
+# 为目标设置属性
+set_target_properties(texture_memory_example PROPERTIES
+    CUDA_STANDARD 14
+    CXX_STANDARD 14
+    CXX_STANDARD_REQUIRED YES
+)
+
+# 输出状态消息
+# 字符串字面量保持英文 (CMake message 的输出是给开发者的，通常英文更通用)
+message(STATUS "Configuring TextureMemoryExample project (located in cuda_bp_examples/8_texture_memory)")
